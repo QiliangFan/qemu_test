@@ -1,0 +1,61 @@
+<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+  <name>kvm-1</name>
+  <memory unit='KiB'>8388608</memory>
+  <currentMemory unit='KiB'>8388608</currentMemory>
+  <vcpu placement='static'>4</vcpu>
+  <os>
+    <type arch='x86_64' machine='ubuntu'>hvm</type>
+    <boot dev='hd'/>
+    <boot dev='cdrom'/>
+    <bootmenu enable='yes'/>
+    <bios useserial='yes' rebootTimeout='0'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+  <cpu mode='host-model'>
+    <model fallback='allow'/>
+  </cpu>
+  <clock offset='utc'/>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <devices>
+    <emulator>/usr/bin/qemu</emulator>
+    <!-- <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='none'/>
+      <source file='/usr/local/img/kvm.disk'/>
+      <target dev='vda' bus='virtio'/>
+    </disk> -->
+    <controller type='ide' index='0'>
+    </controller>
+    <controller type='virtio-serial' index='0'>
+    </controller>
+    <controller type='usb' index='0'>
+    </controller>
+    <!-- <interface type='bridge'>
+      <source bridge='br-ex'/>
+      <model type='virtio'/>
+    </interface> -->
+    <!-- <interface type='bridge'>
+      <source bridge='br-ex'/>
+      <model type='virtio'/>
+    </interface> -->
+    <console type='pty'>
+    </console>
+    <input type='mouse' bus='ps2'/>
+    <graphics type='vnc' autoport='yes' listen='0.0.0.0'>
+      <listen type='address' address='0.0.0.0'/>
+    </graphics>
+    <video>
+      <model type='cirrus' heads='1'/>
+    </video>
+    <memballoon model='virtio'>
+    </memballoon>
+  </devices>
+  <qemu:commandline>
+    <qemu:env name='SPICE_DEBUG_ALLOW_MC' value='1'/>
+  </qemu:commandline>
+</domain>
